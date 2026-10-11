@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ôn tập Toán 5 – Phân số</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap">
+<style>
+:root{--paper:#fdfdff;--grid:#d9e6f7;--ink:#1c2a5a;--soft:#5d6a94;--line:#c3d0ea;--hi:#ffe066;--ok:#17894a;--okbg:#dff5e8;--bad:#c93636;--badbg:#fde4e4;--card:#fff;--margin:#f08a8a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#121830;--grid:#1c2650;--ink:#e8ecff;--soft:#9aa6d4;--line:#34417a;--hi:#c9a400;--ok:#5fd68f;--okbg:#12382a;--bad:#ff8080;--badbg:#411d24;--card:#1a2244;--margin:#a14a62}}
+:root[data-theme="dark"]{--paper:#121830;--grid:#1c2650;--ink:#e8ecff;--soft:#9aa6d4;--line:#34417a;--hi:#c9a400;--ok:#5fd68f;--okbg:#12382a;--bad:#ff8080;--badbg:#411d24;--card:#1a2244;--margin:#a14a62}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font:500 17px/1.6 "Be Vietnam Pro",system-ui,sans-serif;color:var(--ink);background-color:var(--paper);
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+main{max-width:680px;margin:0 auto;padding:20px 16px 48px 28px;border-left:2px solid var(--margin);min-height:100vh}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.2;margin:8px 0 6px;font-weight:800}
+h2{font-size:22px;margin:0 0 8px;font-weight:800}
+p{margin:0 0 12px}.soft{color:var(--soft)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.card{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:16px 18px}
+label{display:block;font-weight:700;margin:18px 0 6px}
+input{font:inherit;width:100%;max-width:320px;padding:10px 12px;border:2px solid var(--ink);border-radius:10px;background:var(--card);color:var(--ink)}
+.decks{display:grid;gap:12px;margin-top:18px}
+.deck{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;width:100%;background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:14px 18px;box-shadow:4px 4px 0 var(--ink)}
+.deck:hover{background:var(--hi);color:#1c2a5a}
+.deck b{font-size:20px}.deck small{display:block;color:var(--soft);font-weight:500}.deck:hover small{color:#1c2a5a}
+.badge{font-weight:800;white-space:nowrap}
+.bar{height:12px;border:2px solid var(--ink);border-radius:8px;background:var(--card);overflow:hidden;margin:6px 0 18px}
+.bar i{display:block;height:100%;background:var(--hi);transition:width .3s}
+.top{display:flex;justify-content:space-between;font-weight:700}
+.q{font-size:clamp(20px,4.6vw,26px);font-weight:700;line-height:1.9;margin:6px 0 16px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:10px 14px;font-size:clamp(19px,4.4vw,24px);min-height:56px}
+.opt .l{flex:none;width:34px;height:34px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;font-size:16px;font-weight:800}
+.opt:not(:disabled):hover{background:var(--hi);color:#1c2a5a}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.opt.ok .l::after{content:"✓"}.opt.bad .l::after{content:"✗"}.opt.ok .l span,.opt.bad .l span{display:none}
+.msg{min-height:30px;font-weight:700;margin:14px 0 6px}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}
+.btn{background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:12px;padding:11px 22px;font-weight:700}
+.btn.alt{background:var(--card);color:var(--ink)}
+.btn:hover{filter:brightness(1.15)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.score{font-size:clamp(56px,16vw,88px);font-weight:800;line-height:1;margin:6px 0}
+.score small{font-size:.35em;color:var(--soft)}
+.rv{margin:10px 0 0;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--card)}
+.rv .q{font-size:19px;line-height:1.9;margin:0 0 4px}
+.rv .a{font-size:16px}.rv .x{color:var(--bad)}.rv .y{color:var(--ok)}
+.f{display:inline-block;vertical-align:middle;text-align:center;margin:0 .12em;line-height:1.2}
+.f>span{display:block;padding:0 .2em}
+.f>span:first-child{border-bottom:.08em solid currentColor}
+.m{white-space:nowrap}.m .f{margin-left:.2em}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<section id="home">
+  <h1>Toán 5: Ôn tập phân số</h1>
+  <p class="soft">Chọn một đề rồi làm lần lượt 10 câu. Chọn xong đáp án là biết đúng hay sai ngay.</p>
+  <label for="nm">Em tên là gì? (có thể bỏ trống)</label>
+  <input id="nm" maxlength="20" autocomplete="off" placeholder="Nhập tên của em">
+  <div class="decks" id="decks"></div>
+</section>
+
+<section id="quiz" hidden>
+  <div class="top"><span id="dn"></span><span id="pg"></span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="q" id="qt"></div>
+  <div class="opts" id="ops"></div>
+  <div class="msg" id="msg" aria-live="polite"></div>
+  <div class="row"><button class="btn" id="next" hidden></button></div>
+</section>
+
+<section id="res" hidden>
+  <div class="card">
+    <p class="soft" id="rd"></p>
+    <div class="score"><span id="sc"></span><small>/10 điểm</small></div>
+    <p><b id="cr"></b></p>
+    <h2 id="pt"></h2>
+    <p id="pm"></p>
+  </div>
+  <div class="row"><button class="btn" id="again">Làm lại đề này</button><button class="btn alt" id="menu">Chọn đề khác</button></div>
+  <div id="rvw"></div>
+</section>
+</main>
+
+<script>
+const D=[{"n": 1, "q": "Phân số nào bằng <span class=\"f\"><span>2</span><span>3</span></span>?", "o": ["<span class=\"f\"><span>4</span><span>9</span></span>", "<span class=\"f\"><span>3</span><span>2</span></span>", "<span class=\"f\"><span>4</span><span>6</span></span>", "<span class=\"f\"><span>2</span><span>6</span></span>"], "a": 2}, {"n": 2, "q": "<span class=\"f\"><span>3</span><span>5</span></span> = <span class=\"f\"><span>…</span><span>20</span></span>. Số cần điền là:", "o": ["6", "9", "12", "15"], "a": 2}, {"n": 3, "q": "<span class=\"f\"><span>15</span><span>35</span></span> = <span class=\"f\"><span>3</span><span>…</span></span>. Số cần điền là:", "o": ["5", "7", "9", "11"], "a": 1}, {"n": 4, "q": "Phân số nào KHÔNG bằng <span class=\"f\"><span>1</span><span>2</span></span>?", "o": ["<span class=\"f\"><span>3</span><span>6</span></span>", "<span class=\"f\"><span>5</span><span>10</span></span>", "<span class=\"f\"><span>4</span><span>6</span></span>", "<span class=\"f\"><span>8</span><span>16</span></span>"], "a": 2}, {"n": 5, "q": "Rút gọn phân số <span class=\"f\"><span>18</span><span>27</span></span> được:", "o": ["<span class=\"f\"><span>2</span><span>3</span></span>", "<span class=\"f\"><span>3</span><span>4</span></span>", "<span class=\"f\"><span>6</span><span>9</span></span>", "<span class=\"f\"><span>9</span><span>13</span></span>"], "a": 0}, {"n": 6, "q": "Phân số nào là phân số tối giản?", "o": ["<span class=\"f\"><span>6</span><span>8</span></span>", "<span class=\"f\"><span>5</span><span>9</span></span>", "<span class=\"f\"><span>10</span><span>15</span></span>", "<span class=\"f\"><span>12</span><span>18</span></span>"], "a": 1}, {"n": 7, "q": "Rút gọn phân số <span class=\"f\"><span>42</span><span>56</span></span> thành phân số tối giản được:", "o": ["<span class=\"f\"><span>2</span><span>3</span></span>", "<span class=\"f\"><span>3</span><span>4</span></span>", "<span class=\"f\"><span>6</span><span>8</span></span>", "<span class=\"f\"><span>7</span><span>9</span></span>"], "a": 1}, {"n": 8, "q": "Mẫu số chung nhỏ nhất khi quy đồng <span class=\"f\"><span>1</span><span>4</span></span> và <span class=\"f\"><span>5</span><span>6</span></span> là:", "o": ["10", "12", "24", "20"], "a": 1}, {"n": 9, "q": "Quy đồng mẫu số <span class=\"f\"><span>2</span><span>3</span></span> và <span class=\"f\"><span>3</span><span>4</span></span> được:", "o": ["<span class=\"f\"><span>8</span><span>12</span></span> và <span class=\"f\"><span>9</span><span>12</span></span>", "<span class=\"f\"><span>6</span><span>12</span></span> và <span class=\"f\"><span>8</span><span>12</span></span>", "<span class=\"f\"><span>2</span><span>12</span></span> và <span class=\"f\"><span>3</span><span>12</span></span>", "<span class=\"f\"><span>4</span><span>12</span></span> và <span class=\"f\"><span>3</span><span>12</span></span>"], "a": 0}, {"n": 10, "q": "So sánh <span class=\"f\"><span>3</span><span>4</span></span> … <span class=\"f\"><span>4</span><span>5</span></span>, dấu thích hợp là:", "o": [">", "<", "=", "Không so sánh được"], "a": 1}, {"n": 11, "q": "Phân số lớn nhất trong các phân số <span class=\"f\"><span>2</span><span>3</span></span> ; <span class=\"f\"><span>5</span><span>6</span></span> ; <span class=\"f\"><span>3</span><span>4</span></span> ; <span class=\"f\"><span>7</span><span>12</span></span> là:", "o": ["<span class=\"f\"><span>2</span><span>3</span></span>", "<span class=\"f\"><span>5</span><span>6</span></span>", "<span class=\"f\"><span>3</span><span>4</span></span>", "<span class=\"f\"><span>7</span><span>12</span></span>"], "a": 1}, {"n": 12, "q": "Sắp xếp theo thứ tự từ bé đến lớn: <span class=\"f\"><span>1</span><span>2</span></span> ; <span class=\"f\"><span>2</span><span>5</span></span> ; <span class=\"f\"><span>3</span><span>10</span></span>", "o": ["<span class=\"f\"><span>1</span><span>2</span></span> ; <span class=\"f\"><span>2</span><span>5</span></span> ; <span class=\"f\"><span>3</span><span>10</span></span>", "<span class=\"f\"><span>3</span><span>10</span></span> ; <span class=\"f\"><span>2</span><span>5</span></span> ; <span class=\"f\"><span>1</span><span>2</span></span>", "<span class=\"f\"><span>2</span><span>5</span></span> ; <span class=\"f\"><span>3</span><span>10</span></span> ; <span class=\"f\"><span>1</span><span>2</span></span>", "<span class=\"f\"><span>3</span><span>10</span></span> ; <span class=\"f\"><span>1</span><span>2</span></span> ; <span class=\"f\"><span>2</span><span>5</span></span>"], "a": 1}, {"n": 13, "q": "Phân số nào lớn hơn 1?", "o": ["<span class=\"f\"><span>7</span><span>8</span></span>", "<span class=\"f\"><span>9</span><span>9</span></span>", "<span class=\"f\"><span>11</span><span>10</span></span>", "<span class=\"f\"><span>5</span><span>6</span></span>"], "a": 2}, {"n": 14, "q": "So sánh <span class=\"f\"><span>5</span><span>7</span></span> … <span class=\"f\"><span>5</span><span>9</span></span>, dấu thích hợp là:", "o": [">", "<", "=", "Không xác định được"], "a": 0}, {"n": 15, "q": "Hỗn số <span class=\"m\">2<span class=\"f\"><span>1</span><span>3</span></span></span> viết thành phân số là:", "o": ["<span class=\"f\"><span>3</span><span>3</span></span>", "<span class=\"f\"><span>5</span><span>3</span></span>", "<span class=\"f\"><span>7</span><span>3</span></span>", "<span class=\"f\"><span>6</span><span>3</span></span>"], "a": 2}, {"n": 16, "q": "Phân số <span class=\"f\"><span>11</span><span>4</span></span> viết thành hỗn số là:", "o": ["<span class=\"m\">2<span class=\"f\"><span>1</span><span>4</span></span></span>", "<span class=\"m\">2<span class=\"f\"><span>3</span><span>4</span></span></span>", "<span class=\"m\">3<span class=\"f\"><span>1</span><span>4</span></span></span>", "<span class=\"m\">1<span class=\"f\"><span>7</span><span>4</span></span></span>"], "a": 1}, {"n": 17, "q": "Phân số nào là phân số thập phân?", "o": ["<span class=\"f\"><span>3</span><span>7</span></span>", "<span class=\"f\"><span>4</span><span>10</span></span>", "<span class=\"f\"><span>5</span><span>12</span></span>", "<span class=\"f\"><span>6</span><span>15</span></span>"], "a": 1}, {"n": 18, "q": "Phân số nào dưới đây là phân số thập phân?", "o": ["<span class=\"f\"><span>7</span><span>100</span></span>", "<span class=\"f\"><span>7</span><span>50</span></span>", "<span class=\"f\"><span>7</span><span>20</span></span>", "<span class=\"f\"><span>7</span><span>25</span></span>"], "a": 0}, {"n": 19, "q": "Viết <span class=\"f\"><span>3</span><span>5</span></span> thành phân số thập phân được:", "o": ["<span class=\"f\"><span>3</span><span>10</span></span>", "<span class=\"f\"><span>6</span><span>10</span></span>", "<span class=\"f\"><span>15</span><span>100</span></span>", "<span class=\"f\"><span>5</span><span>10</span></span>"], "a": 1}, {"n": 20, "q": "<span class=\"f\"><span>9</span><span>25</span></span> = <span class=\"f\"><span>…</span><span>100</span></span>. Số cần điền là:", "o": ["9", "25", "36", "45"], "a": 2}, {"n": 21, "q": "Phân số thập phân <span class=\"f\"><span>75</span><span>100</span></span> viết thành số thập phân là:", "o": ["0,075", "7,5", "0,75", "0,705"], "a": 2}, {"n": 22, "q": "Số thập phân 0,4 viết thành phân số thập phân là:", "o": ["<span class=\"f\"><span>4</span><span>100</span></span>", "<span class=\"f\"><span>4</span><span>10</span></span>", "<span class=\"f\"><span>40</span><span>10</span></span>", "<span class=\"f\"><span>4</span><span>1000</span></span>"], "a": 1}, {"n": 23, "q": "Phân số <span class=\"f\"><span>3</span><span>4</span></span> viết thành số thập phân là:", "o": ["0,34", "0,75", "0,25", "3,4"], "a": 1}, {"n": 24, "q": "<span class=\"f\"><span>1</span><span>2</span></span> + <span class=\"f\"><span>1</span><span>3</span></span> = ?", "o": ["<span class=\"f\"><span>2</span><span>5</span></span>", "<span class=\"f\"><span>5</span><span>6</span></span>", "<span class=\"f\"><span>2</span><span>6</span></span>", "<span class=\"f\"><span>1</span><span>6</span></span>"], "a": 1}, {"n": 25, "q": "<span class=\"f\"><span>3</span><span>4</span></span> − <span class=\"f\"><span>1</span><span>6</span></span> = ?", "o": ["<span class=\"f\"><span>2</span><span>2</span></span>", "<span class=\"f\"><span>7</span><span>12</span></span>", "<span class=\"f\"><span>2</span><span>10</span></span>", "<span class=\"f\"><span>5</span><span>12</span></span>"], "a": 1}, {"n": 26, "q": "<span class=\"f\"><span>2</span><span>5</span></span> + <span class=\"f\"><span>3</span><span>10</span></span> = ?", "o": ["<span class=\"f\"><span>5</span><span>15</span></span>", "<span class=\"f\"><span>5</span><span>10</span></span>", "<span class=\"f\"><span>7</span><span>10</span></span>", "<span class=\"f\"><span>1</span><span>2</span></span>"], "a": 2}, {"n": 27, "q": "<span class=\"f\"><span>5</span><span>6</span></span> − <span class=\"f\"><span>1</span><span>3</span></span> = ?", "o": ["<span class=\"f\"><span>4</span><span>3</span></span>", "<span class=\"f\"><span>1</span><span>2</span></span>", "<span class=\"f\"><span>4</span><span>6</span></span>", "<span class=\"f\"><span>1</span><span>3</span></span>"], "a": 1}, {"n": 28, "q": "<span class=\"f\"><span>3</span><span>8</span></span> + <span class=\"f\"><span>5</span><span>12</span></span> = ?", "o": ["<span class=\"f\"><span>8</span><span>20</span></span>", "<span class=\"f\"><span>15</span><span>24</span></span>", "<span class=\"f\"><span>19</span><span>24</span></span>", "<span class=\"f\"><span>8</span><span>24</span></span>"], "a": 2}, {"n": 29, "q": "<span class=\"f\"><span>7</span><span>10</span></span> − <span class=\"f\"><span>2</span><span>5</span></span> = ?", "o": ["<span class=\"f\"><span>5</span><span>5</span></span>", "<span class=\"f\"><span>5</span><span>10</span></span>", "<span class=\"f\"><span>3</span><span>10</span></span>", "<span class=\"f\"><span>3</span><span>5</span></span>"], "a": 2}, {"n": 30, "q": "<span class=\"f\"><span>3</span><span>4</span></span> + <span class=\"f\"><span>5</span><span>6</span></span> = ?", "o": ["<span class=\"f\"><span>8</span><span>10</span></span>", "<span class=\"f\"><span>19</span><span>12</span></span>", "<span class=\"f\"><span>8</span><span>12</span></span>", "<span class=\"f\"><span>15</span><span>24</span></span>"], "a": 1}, {"n": 31, "q": "1 − <span class=\"f\"><span>3</span><span>7</span></span> = ?", "o": ["<span class=\"f\"><span>2</span><span>7</span></span>", "<span class=\"f\"><span>4</span><span>7</span></span>", "<span class=\"f\"><span>3</span><span>7</span></span>", "<span class=\"f\"><span>1</span><span>7</span></span>"], "a": 1}, {"n": 32, "q": "2 − <span class=\"f\"><span>3</span><span>4</span></span> = ?", "o": ["<span class=\"f\"><span>1</span><span>4</span></span>", "<span class=\"f\"><span>5</span><span>4</span></span>", "<span class=\"f\"><span>3</span><span>4</span></span>", "<span class=\"f\"><span>2</span><span>4</span></span>"], "a": 1}, {"n": 33, "q": "Kết quả của <span class=\"f\"><span>5</span><span>12</span></span> + <span class=\"f\"><span>1</span><span>4</span></span> viết dưới dạng phân số tối giản là:", "o": ["<span class=\"f\"><span>6</span><span>16</span></span>", "<span class=\"f\"><span>8</span><span>12</span></span>", "<span class=\"f\"><span>2</span><span>3</span></span>", "<span class=\"f\"><span>4</span><span>6</span></span>"], "a": 2}, {"n": 34, "q": "Tìm x biết x + <span class=\"f\"><span>1</span><span>5</span></span> = <span class=\"f\"><span>3</span><span>4</span></span>:", "o": ["<span class=\"f\"><span>2</span><span>9</span></span>", "<span class=\"f\"><span>11</span><span>20</span></span>", "<span class=\"f\"><span>4</span><span>9</span></span>", "<span class=\"f\"><span>19</span><span>20</span></span>"], "a": 1}, {"n": 35, "q": "Tìm x biết x − <span class=\"f\"><span>2</span><span>3</span></span> = <span class=\"f\"><span>1</span><span>6</span></span>:", "o": ["<span class=\"f\"><span>1</span><span>2</span></span>", "<span class=\"f\"><span>3</span><span>9</span></span>", "<span class=\"f\"><span>5</span><span>6</span></span>", "<span class=\"f\"><span>1</span><span>4</span></span>"], "a": 2}, {"n": 36, "q": "Hoa uống <span class=\"f\"><span>1</span><span>2</span></span> lít sữa buổi sáng và <span class=\"f\"><span>1</span><span>4</span></span> lít sữa buổi chiều. Cả ngày Hoa uống:", "o": ["<span class=\"f\"><span>2</span><span>6</span></span> lít", "<span class=\"f\"><span>2</span><span>4</span></span> lít", "<span class=\"f\"><span>3</span><span>4</span></span> lít", "<span class=\"f\"><span>1</span><span>4</span></span> lít"], "a": 2}, {"n": 37, "q": "Sợi dây dài <span class=\"f\"><span>7</span><span>8</span></span> m, cắt đi <span class=\"f\"><span>1</span><span>4</span></span> m. Sợi dây còn lại dài:", "o": ["<span class=\"f\"><span>6</span><span>4</span></span> m", "<span class=\"f\"><span>5</span><span>8</span></span> m", "<span class=\"f\"><span>6</span><span>8</span></span> m", "<span class=\"f\"><span>1</span><span>2</span></span> m"], "a": 1}, {"n": 38, "q": "An làm bài tập hết <span class=\"f\"><span>1</span><span>3</span></span> giờ và đọc sách hết <span class=\"f\"><span>1</span><span>2</span></span> giờ. Tổng thời gian An làm cả hai việc là:", "o": ["<span class=\"f\"><span>2</span><span>5</span></span> giờ", "<span class=\"f\"><span>5</span><span>6</span></span> giờ", "<span class=\"f\"><span>1</span><span>6</span></span> giờ", "<span class=\"f\"><span>2</span><span>6</span></span> giờ"], "a": 1}, {"n": 39, "q": "Một mảnh đất, <span class=\"f\"><span>2</span><span>5</span></span> diện tích trồng rau, <span class=\"f\"><span>1</span><span>3</span></span> diện tích trồng hoa, phần còn lại để làm lối đi. Lối đi chiếm:", "o": ["<span class=\"f\"><span>3</span><span>8</span></span> diện tích", "<span class=\"f\"><span>11</span><span>15</span></span> diện tích", "<span class=\"f\"><span>4</span><span>15</span></span> diện tích", "<span class=\"f\"><span>2</span><span>15</span></span> diện tích"], "a": 2}, {"n": 40, "q": "(Nâng cao) Số thích hợp điền vào ô trống: <span class=\"f\"><span>3</span><span>4</span></span> + … = <span class=\"m\">1<span class=\"f\"><span>1</span><span>12</span></span></span>", "o": ["<span class=\"f\"><span>1</span><span>2</span></span>", "<span class=\"f\"><span>1</span><span>3</span></span>", "<span class=\"f\"><span>1</span><span>4</span></span>", "<span class=\"f\"><span>1</span><span>6</span></span>"], "a": 1}];
+const DECKS=[0,1,2,3].map(k=>D.filter((_,i)=>i%4===k));
+const $=s=>document.querySelector(s);
+const L="ABCD";
+let deck=0,qs=[],i=0,pick=[],best={};
+
+function show(id){["home","quiz","res"].forEach(s=>$("#"+s).hidden=s!==id);window.scrollTo(0,0)}
+function name(){return $("#nm").value.trim()}
+
+function home(){
+  $("#decks").innerHTML=DECKS.map((d,k)=>`<button class="deck" data-k="${k}"><span><b>Đề ${k+1}</b><small>10 câu · câu ${d.map(q=>q.n).slice(0,3).join(", ")}…</small></span><span class="badge">${best[k]!=null?"Điểm cao nhất: "+best[k]:"Chưa làm"}</span></button>`).join("");
+  show("home");
+}
+$("#decks").addEventListener("click",e=>{const b=e.target.closest(".deck");if(b)start(+b.dataset.k)});
+
+function start(k){deck=k;qs=DECKS[k];i=0;pick=[];$("#dn").textContent="Đề "+(k+1);ask();show("quiz")}
+
+function ask(){
+  const q=qs[i];
+  $("#pg").textContent=`Câu ${i+1}/10`;
+  $("#bar").style.width=(i/10*100)+"%";
+  $("#qt").innerHTML=q.q;
+  $("#ops").innerHTML=q.o.map((o,k)=>`<button class="opt" data-k="${k}"><span class="l"><span>${L[k]}</span></span><span>${o}</span></button>`).join("");
+  $("#msg").textContent="";$("#msg").className="msg";
+  $("#next").hidden=true;
+}
+$("#ops").addEventListener("click",e=>{
+  const b=e.target.closest(".opt");if(!b||pick[i]!=null)return;
+  const k=+b.dataset.k,q=qs[i];pick[i]=k;
+  document.querySelectorAll(".opt").forEach((o,j)=>{o.disabled=true;if(j===q.a)o.classList.add("ok")});
+  const m=$("#msg");
+  if(k===q.a){m.textContent="Chính xác! Giỏi lắm.";m.className="msg ok"}
+  else{b.classList.add("bad");m.textContent="Chưa đúng rồi. Đáp án đúng là "+L[q.a]+".";m.className="msg bad"}
+  const n=$("#next");n.textContent=i<9?"Câu tiếp theo":"Xem kết quả";n.hidden=false;n.focus();
+});
+$("#next").addEventListener("click",()=>{if(i<9){i++;ask()}else finish()});
+
+function praise(c){
+  const n=name()?", "+name():"";
+  if(c===10)return["Điểm 10 tuyệt đối!","Em làm đúng cả 10 câu"+n+". Thật xuất sắc! Hãy thử tiếp các đề còn lại nhé."];
+  if(c===9)return["Gần như hoàn hảo!","Chỉ sai 1 câu thôi"+n+". Xem lại câu đó là lần sau em đạt điểm 10 rồi."];
+  if(c>=7)return["Làm tốt lắm!","Em nắm chắc phần lớn kiến thức"+n+". Xem lại các câu sai bên dưới để lên điểm nhé."];
+  if(c>=5)return["Em đã cố gắng rồi!","Còn vài chỗ chưa chắc"+n+". Đọc lại các câu sai bên dưới rồi làm lại đề này, em sẽ tiến bộ ngay."];
+  return["Đừng nản nhé!","Bài này không dễ đâu"+n+", và sai là cách để nhớ lâu hơn. Xem lại các câu sai, rồi thử làm lại. Lần sau chắc chắn khá hơn."];
+}
+function finish(){
+  const c=qs.filter((q,k)=>pick[k]===q.a).length;
+  best[deck]=Math.max(best[deck]??0,c);
+  $("#bar").style.width="100%";
+  $("#rd").textContent="Kết quả Đề "+(deck+1)+(name()?" của "+name():"");
+  $("#sc").textContent=c;
+  $("#cr").textContent=`Đúng ${c}/10 câu · Sai ${10-c} câu`;
+  const [t,m]=praise(c);$("#pt").textContent=t;$("#pm").textContent=m;
+  const wrong=qs.map((q,k)=>[q,k]).filter(([q,k])=>pick[k]!==q.a);
+  $("#rvw").innerHTML=wrong.length?`<h2 style="margin-top:26px">Xem lại các câu chưa đúng</h2>`+wrong.map(([q,k])=>`<div class="rv"><div class="q">Câu ${q.n}: ${q.q}</div><div class="a x">Em chọn: ${L[pick[k]]}. ${q.o[pick[k]]}</div><div class="a y">Đáp án đúng: ${L[q.a]}. ${q.o[q.a]}</div></div>`).join(""):"";
+  show("res");
+}
+$("#again").addEventListener("click",()=>start(deck));
+$("#menu").addEventListener("click",home);
+home();
+</script>
+</body>
+</html>
